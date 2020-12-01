@@ -13,19 +13,19 @@ class Table extends Component {
    constructor(props) {
       super(props)
       this.state = {
-         Offers: [],
+         Stratups: [],
          
          loading: true,
       }
    }
    componentDidMount() {
       //requete.then((data)=> setState(offerres:[...data],loading:false))
-      // Axios.get('https:localhost:3003/api/offre').then((response)=>{this.setState({Offers:[...response],loading:false})});
-      Axios.get('http://localhost:3003/api/offre').then(res=> {
+      Axios.get('http://localhost:3003/api/startup').then(res=> {
        
-       
-         this.setState({Offers : res.data,loading:false});
-         console.log(this.Offers);
+        
+         this.setState({Startups : res.data,loading:false});
+         console.log(this.Startups);
+        
       });
 
    }
@@ -33,14 +33,14 @@ class Table extends Component {
    
    renderTableHeader() {
      
-      let header = Object.keys(this.state.Offers[0])
+      let header = Object.keys(this.state.Startups[0])
       return header.map((key, index) => {
          return <th key={index}>{key.toUpperCase()}</th>
       })
    }
    renderTableData() {
-      return this.state.Offers.map((offer, index) => {
-         const { name, website } = offer
+      return this.state.Startups.map((Startup, index) => {
+         const { name, website } = Startup
          return (
             <tr>
 

@@ -8,20 +8,25 @@ class OFFRE extends Component {
       super(props) 
       this.state = { 
          Offers: [
-            {  Poste: 'Mobile Dev', Salaire: '25$' , Travail:'Remote',Skills:"Flutter",Description:"zv hgezef yzgrucboz yegcubz zygrbzjr yrezcbzeygr zgr" },
-            {  Poste: 'Mobile Dev', Salaire: '25$' , Travail:'Remote',Skills:"Flutter",Description:"zv hgezef yzgrucboz yegcubz zygrbzjr yrezcbzeygr zgr" },
+           /* {  Poste: 'Mobile Dev', Salaire: '25$' , Travail:'Remote',Skills:"Flutter",Description:"zv hgezef yzgrucboz yegcubz zygrbzjr yrezcbzeygr zgr" },
+            {  Poste: 'Mobile Dev', Salaire: '25$' , Travail:'Remote',Skills:"Flutter",Description:"zv hgezef yzgrucboz yegcubz zygrbzjr yrezcbzeygr zgr" },*/
 
          ],
-       
+        loading: true,
       }
       console.log(this.props);
    }
-   useEffect(){
-      Axios.get('http:localhost:3001/api/offre').then((data)=>{
-        console.log(data);
+  /* componentDidMount() {
+      //requete.then((data)=> setState(offerres:[...data],loading:false))
+      Axios.get('http://localhost:3003/api/offre').then(res=> {
+       
+        
+         this.setState({Offers : res.data,loading:false});
+         console.log("result",this.Offers);
+        
       });
-      
-   }
+
+   }*/
 
    renderTableHeader() {
     let header = Object.keys(this.state.Offers[0])
@@ -31,7 +36,7 @@ class OFFRE extends Component {
  }
 renderTableData() {
     return this.state.Offers.map((offer, index) => {
-       const {  Poste,Salaire, Travail, Skills,Description} = offer
+       const {  Poste,Salaire, Travail, Skills,Contrat, Diplome, Description} = offer
        return (
           <tr >
        
@@ -39,6 +44,9 @@ renderTableData() {
              <td>{Salaire}</td>
              <td>{Travail}</td>
              <td>{Skills}</td>
+             <td>{Contrat}</td>
+             <td>{Diplome}</td>
+             <td>{Description}</td>
              <td>
                 <div className="name">{Description}</div></td>
              
@@ -51,7 +59,12 @@ renderTableData() {
  render() {
     return (
        <div >
-          <h1 id='title'>Start-ups List Table</h1>
+           {this.state.loading ?
+               'loading...'
+
+               :
+               <>
+          <h1 id='title'>Offers List Table</h1>
           <table id='offers'>
              <tbody>
              
@@ -59,6 +72,8 @@ renderTableData() {
                   {this.renderTableData()}
              </tbody>
           </table>
+          </ >
+            }
        </div>
     )
  }
