@@ -1,56 +1,42 @@
 import Axios from 'axios'
 import React, { Component } from 'react'
 import './Table.css'
-import OFFRE from './offres'
-import {
-   Container, Col, Form,
-   FormGroup, Label, Input,
-   Button, Dropdown,
-} from 'reactstrap';
-import App from './App'
+
 import { BrowserRouter, BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
-class Table extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         Stratups: [],
-         
-         loading: true,
+import fetchAllStartups from './actions creators/startups/fetch'
+import { useEffect } from 'react'
+const Table = ({
+   startups = [],
+   loading = false,
+   fetchAllStartups = f => f
+}) => {
+   useEffect(()=>{
+      fetchAllStartups()
+   },fetchAllStartups)
+   const renderTableHeader = () => {
+      if (startups.length) {
+         let header = Object.keys(startups[0])
+         return header.map((key, index) => {
+            return <th key={index}>{key.toUpperCase()}</th>
+         })
       }
-   }
-   componentDidMount() {
-      //requete.then((data)=> setState(offerres:[...data],loading:false))
-      Axios.get('http://localhost:3003/api/startup').then(res=> {
-       
-        
-         this.setState({Startups : res.data,loading:false});
-         console.log(this.Startups);
-        
-      });
 
    }
-
-   
-   renderTableHeader() {
-     
-      let header = Object.keys(this.state.Startups[0])
-      return header.map((key, index) => {
-         return <th key={index}>{key.toUpperCase()}</th>
-      })
-   }
-   renderTableData() {
-      return this.state.Startups.map((Startup, index) => {
+   const renderTableData = () => {
+      return startups.map((Startup, index) => {
          const { name, website } = Startup
          return (
-            <tr>
 
+            <tr>
                <td >
                   <Link to={'/offre/' + name}>
-                     <div className="name">{name}</div>
+                     {name}
                   </Link>
                </td>
 
-               <td id="web">{website}</td>
+               <td id="web">
+                  <a href={website}>{website}
+                  </a></td>
 
 
             </tr>
@@ -59,29 +45,25 @@ class Table extends Component {
 
       })
    }
+   return <div >
+      {loading ?
+         'loading...'
+         :
+         <>
+            {/* <h1 id='title'>Start-ups List Table //{state.size}//</h1> */}
+            <table id='offers'>
+               <tbody>
 
-   render() {
-      return (
-         <div >
-            {this.state.loading ?
-               'loading...'
+                  <tr>{renderTableHeader()}</tr>
 
-               :
-               <>
-                  <h1 id='title'>Start-ups List Table</h1>
-                  <table id='offers'>
-                     <tbody>
+                  {renderTableData()}
 
-                        <tr>{this.renderTableHeader()}</tr>
-                        {this.renderTableData()}
-
-                     </tbody>
-                  </table>
-               </ >
-            }
-         </div>
-      )
-   }
-
+               </tbody>
+            </table>
+         </ >
+      }
+   </div>
 }
+
+
 export default Table 

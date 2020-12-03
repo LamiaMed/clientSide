@@ -7,16 +7,17 @@ body{
 #button {
   margin-left: 87%;
   margin-bottom: 0.5%;
+  
   padding: 0.6%;
   width: 5%;
-  background-color: rgb(117, 172, 253);
+  background-color: rgb(0, 106, 177);
 }
   nav{
     
     width: 100%;
     margin-top: 2%;
     font-size: large;
-    background-color: rgb(36, 211, 255);
+    background-color: rgb(50, 173, 255);
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     box-shadow: 3px 3px 5px 6px rgba(122, 122, 122, 0.664);  
     border-radius: 10px;
